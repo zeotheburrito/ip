@@ -1,5 +1,6 @@
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Jeff {
     public static void main(String args[]) {
@@ -10,6 +11,9 @@ public class Jeff {
 
         String exitMsg = "Bye. Hope to see you again soon!";
         String exitPhrase = "bye";
+        String listPhrase = "list";
+
+        ArrayList<String> list = new ArrayList<String>();
 
         System.out.println(greetings);
 
@@ -17,9 +21,21 @@ public class Jeff {
         String input = sc.nextLine();
 
         while (!input.equals(exitPhrase)) {
-            String message = "____________________________________________________________\n" +
-                        " " + input + "\n" +
+            String message = "";
+            if (input.equals(listPhrase)) {
+                String items = "";
+                for (int i = 0; i < list.size(); i++) {
+                    items += " " + (i + 1) + ". " + list.get(i) + "\n";
+                }
+                message = "____________________________________________________________\n" +
+                        items +
                         "____________________________________________________________\n";
+            } else {
+                list.add(input);
+                message = "____________________________________________________________\n" +
+                        " added: " + input + "\n" +
+                        "____________________________________________________________\n";
+            }
             System.out.println(message);
             input = sc.nextLine();
         }
