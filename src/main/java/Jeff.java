@@ -16,13 +16,13 @@ public class Jeff {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
 
-        do {
+        while (!input.equals(exitPhrase)) {
             String message = "____________________________________________________________\n" +
                         " " + input + "\n" +
                         "____________________________________________________________\n";
             System.out.println(message);
             input = sc.nextLine();
-        } while (!input.equals(exitPhrase));
+        }
 
         String message = "____________________________________________________________\n" +
                 " " + exitMsg + "\n" +
