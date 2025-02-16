@@ -1,6 +1,12 @@
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Jeff {
     enum TaskType {
@@ -23,6 +29,7 @@ public class Jeff {
 
     private static String markTask(int index) {
         list.get(index).setDone();
+        saveList();
         return "____________________________________________________________\n" +
             " Nice! I've marked this task as done:\n" +
             "  " + list.get(index) + "\n" +
@@ -31,6 +38,7 @@ public class Jeff {
 
     private static String unmarkTask(int index) {
         list.get(index).setNotDone();
+        saveList();
         return "____________________________________________________________\n" +
             " OK, I've marked this task as not done yet:\n" +
             "  " + list.get(index) + "\n" +
@@ -44,6 +52,7 @@ public class Jeff {
             case EVENT -> new Event(task);
         };
         list.add(newTask);
+        saveList();
         return "____________________________________________________________\n" +
             " Got it. I've added this task:\n" +
             "  " + newTask + "\n" +
@@ -67,6 +76,7 @@ public class Jeff {
 
     private static String deleteTask(int index) {
         Task deletedTask = list.remove(index);
+        saveList();
         return "____________________________________________________________\n" +
                 " Noted. I've removed this task:\n" +
                 "  " + deletedTask + "\n" +
@@ -74,7 +84,62 @@ public class Jeff {
                 "____________________________________________________________\n";
     }
 
+    private static void loadList() {
+        File file = new File("data/jeff.txt");
+
+        if (!file.exists()) {
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Task task = sortTask(line);
+                if (task != null) {
+                    list.add(task);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading from file: " + e.getMessage());
+        }
+    }
+
+    private static void saveList() {
+        File file = new File("data/jeff.txt");
+
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            if (parentDir.mkdirs()) {
+                // do nothing
+            } else {
+                System.err.println("Failed to create directories!");
+                return;
+            }
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (Task task : list) {
+                writer.write(task.toString() + "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    private static Task sortTask(String line) {
+        if (line.startsWith("[T]")) {
+            return Todo.parseTask(line.substring(3));
+        } else if (line.startsWith("[D]")) {
+            return Deadline.parseTask(line.substring(3));
+        } else if (line.startsWith("[E]")) {
+            return Event.parseTask(line.substring(3));
+        }
+        return null;
+    }
+
     public static void main(String args[]) {
+        loadList();
+
         String greetings = "____________________________________________________________\n" +
                 " Hello! I'm Jeff\n" +
                 " What can I do for you?\n" +
