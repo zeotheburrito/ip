@@ -3,6 +3,11 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Jeff {
+    enum TaskType {
+        TODO,
+        DEADLINE,
+        EVENT
+    }
     private static ArrayList<Task> list = new ArrayList<Task>();
 
     private static String getList() {
@@ -32,48 +37,22 @@ public class Jeff {
             "____________________________________________________________\n";
     }
 
-    private static String addTask(String task) {
-        list.add(new Task(task));
+    private static String addTask(String task, TaskType type) {
+        Task newTask = switch(type) {
+            case TODO -> new Todo(task);
+            case DEADLINE -> new Deadline(task);
+            case EVENT -> new Event(task);
+        };
+        list.add(newTask);
         return "____________________________________________________________\n" +
-            " added: " + task + "\n" +
+            " Got it. I've added this task:\n" +
+            "  " + newTask + "\n" +
+            getNumOfTasksMsg() +
             "____________________________________________________________\n";
     }
 
     private static String getNumOfTasksMsg() {
         return " Now you have " + list.size() + " tasks in the list.\n";
-    }
-
-    private static String addTodo(String todo) {
-        Todo newTodo = new Todo(todo);
-        list.add(newTodo);
-        return "____________________________________________________________\n" +
-            " Got it. I've added this task:\n" +
-            "  " + newTodo + "\n" +
-            getNumOfTasksMsg() +
-            "____________________________________________________________\n";
-    }
-
-    private static String addDeadline(String deadline) {
-        Deadline newDeadline = new Deadline(deadline);
-        list.add(newDeadline);
-        return "____________________________________________________________\n" +
-                " Got it. I've added this task:\n" +
-                "  " + newDeadline + "\n" +
-                getNumOfTasksMsg() +
-                "____________________________________________________________\n";
-    }
-
-    private static String addEvent(String event) {
-        if (event.isEmpty()) {
-            return "Error: The task is empty.";
-        }
-        Event newEvent = new Event(event);
-        list.add(newEvent);
-        return "____________________________________________________________\n" +
-                " Got it. I've added this task:\n" +
-                "  " + newEvent + "\n" +
-                getNumOfTasksMsg() +
-                "____________________________________________________________\n";
     }
 
     private static boolean isTaskEmpty(String[] parsedMsg) {
@@ -124,21 +103,21 @@ public class Jeff {
                     if (isTaskEmpty(parsed)) {
                         yield getEmptyError();
                     } else {
-                        yield addTodo(input.split("todo ")[1]);
+                        yield addTask(input.split("todo ")[1], TaskType.TODO);
                     }
                 }
                 case "deadline" -> {
                     if (isTaskEmpty(parsed)) {
                         yield getEmptyError();
                     } else {
-                        yield addDeadline(input.split("deadline ")[1]);
+                        yield addTask(input.split("deadline ")[1], TaskType.DEADLINE);
                     }
                 }
                 case "event" ->  {
                     if (isTaskEmpty(parsed)) {
                         yield getEmptyError();
                     } else {
-                        yield addEvent(input.split("event ")[1]);
+                        yield addTask(input.split("event ")[1], TaskType.EVENT);
                     }
                 }
                 case "delete" -> {
