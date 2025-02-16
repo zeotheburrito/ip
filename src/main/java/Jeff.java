@@ -100,10 +100,7 @@ public class Jeff {
                 }
                 case "todo" -> addTodo(input.split("todo ")[1]);
                 case "deadline" -> addDeadline(input.split("deadline ")[1]);
-                case "event" -> {
-                    System.out.println(input.split("event ")[1]);
-                    yield addEvent(input.split("event ")[1]);
-                }
+                case "event" ->  addEvent(input.split("event ")[1]);
                 default -> addTask(input);
             };
 
