@@ -86,6 +86,15 @@ public class Jeff {
             "____________________________________________________________\n";
     }
 
+    private static String deleteTask(int index) {
+        Task deletedTask = list.remove(index);
+        return "____________________________________________________________\n" +
+                " Noted. I've removed this task:\n" +
+                "  " + deletedTask + "\n" +
+                getNumOfTasksMsg() +
+                "____________________________________________________________\n";
+    }
+
     public static void main(String args[]) {
         String greetings = "____________________________________________________________\n" +
                 " Hello! I'm Jeff\n" +
@@ -108,8 +117,8 @@ public class Jeff {
                     yield markTask(index);
                 }
                 case "unmark" -> {
-                    int ind = Integer.parseInt(parsed[1]) - 1;
-                    yield unmarkTask(ind);
+                    int index = Integer.parseInt(parsed[1]) - 1;
+                    yield unmarkTask(index);
                 }
                 case "todo" -> {
                     if (isTaskEmpty(parsed)) {
@@ -131,6 +140,10 @@ public class Jeff {
                     } else {
                         yield addEvent(input.split("event ")[1]);
                     }
+                }
+                case "delete" -> {
+                    int index = Integer.parseInt(parsed[1]) - 1;
+                    yield deleteTask(index);
                 }
                 default -> {
                     yield "____________________________________________________________\n" +
