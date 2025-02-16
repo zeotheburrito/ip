@@ -64,6 +64,9 @@ public class Jeff {
     }
 
     private static String addEvent(String event) {
+        if (event.isEmpty()) {
+            return "Error: The task is empty.";
+        }
         Event newEvent = new Event(event);
         list.add(newEvent);
         return "____________________________________________________________\n" +
@@ -71,6 +74,16 @@ public class Jeff {
                 "  " + newEvent + "\n" +
                 getNumOfTasksMsg() +
                 "____________________________________________________________\n";
+    }
+
+    private static boolean isTaskEmpty(String[] parsedMsg) {
+        return parsedMsg.length <= 1;
+    }
+
+    private static String getEmptyError() {
+        return "____________________________________________________________\n" +
+            " Error: The task is empty.\n" +
+            "____________________________________________________________\n";
     }
 
     public static void main(String args[]) {
@@ -98,10 +111,32 @@ public class Jeff {
                     int ind = Integer.parseInt(parsed[1]) - 1;
                     yield unmarkTask(ind);
                 }
-                case "todo" -> addTodo(input.split("todo ")[1]);
-                case "deadline" -> addDeadline(input.split("deadline ")[1]);
-                case "event" ->  addEvent(input.split("event ")[1]);
-                default -> addTask(input);
+                case "todo" -> {
+                    if (isTaskEmpty(parsed)) {
+                        yield getEmptyError();
+                    } else {
+                        yield addTodo(input.split("todo ")[1]);
+                    }
+                }
+                case "deadline" -> {
+                    if (isTaskEmpty(parsed)) {
+                        yield getEmptyError();
+                    } else {
+                        yield addDeadline(input.split("deadline ")[1]);
+                    }
+                }
+                case "event" ->  {
+                    if (isTaskEmpty(parsed)) {
+                        yield getEmptyError();
+                    } else {
+                        yield addEvent(input.split("event ")[1]);
+                    }
+                }
+                default -> {
+                    yield "____________________________________________________________\n" +
+                    " Error: Invalid command.\n" +
+                    "____________________________________________________________\n";
+                }
             };
 
             System.out.println(message);
