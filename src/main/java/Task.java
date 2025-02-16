@@ -1,4 +1,4 @@
-public class Task {
+abstract public class Task {
     protected String desc;
     protected boolean done;
     public Task(String desc) {
