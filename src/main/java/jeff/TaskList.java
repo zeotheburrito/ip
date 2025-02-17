@@ -1,3 +1,5 @@
+package jeff;
+
 import java.util.ArrayList;
 
 public class TaskList {
@@ -75,10 +77,12 @@ public class TaskList {
     @Override
     public String toString() {
         StringBuilder items = new StringBuilder();
-        for (int i = 0; i < tasks.size(); i++) {
+        for (int i = 0; i < tasks.size() - 1; i++) {
             items.append(" ").append(i + 1).append(". ")
                     .append(tasks.get(i)).append("\n");
         }
+        items.append(" ").append(tasks.size()).append(". ")
+                .append(tasks.get(tasks.size() - 1));
         return items.toString();
     }
 }
