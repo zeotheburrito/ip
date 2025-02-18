@@ -1,5 +1,7 @@
 package jeff;
 
+import java.util.Objects;
+
 public class Todo extends Task{
     public Todo(String desc) {
         super(desc);
@@ -19,5 +21,18 @@ public class Todo extends Task{
             return "[T][X] " + this.desc;
         }
         return "[T][ ] " + this.desc;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Todo other = (Todo) obj;
+        return Objects.equals(this.desc, other.desc);
     }
 }

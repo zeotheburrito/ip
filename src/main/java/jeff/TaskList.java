@@ -3,7 +3,7 @@ package jeff;
 import java.util.ArrayList;
 
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public TaskList(String data) {
         this.tasks = new ArrayList<>();
@@ -62,7 +62,7 @@ public class TaskList {
         return newEvent;
     }
 
-    public Task delete(int index) {
+    public Task delete(int index) throws IndexOutOfBoundsException {
         return tasks.remove(index);
     }
 
@@ -70,7 +70,7 @@ public class TaskList {
         return tasks.size();
     }
 
-    public Task get(int index) {
+    public Task get(int index) throws IndexOutOfBoundsException {
         return tasks.get(index);
     }
 

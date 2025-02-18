@@ -3,8 +3,8 @@ package jeff;
 import java.io.IOException;
 
 public class Parser {
-    public int getIndex(String command) {
-        return Integer.parseInt(command) - 1;
+    public int getIndex(String index) throws NumberFormatException {
+        return Integer.parseInt(index) - 1;
     }
 
     private boolean checkTaskEmpty(String[] parsedMsg) {
