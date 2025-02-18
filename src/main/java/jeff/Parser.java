@@ -3,10 +3,23 @@ package jeff;
 import java.io.IOException;
 
 public class Parser {
+    /**
+     * Returns the integer value of the String index.
+     *
+     * @param index String of an index value.
+     * @return Integer value of String index.
+     * @throws NumberFormatException If String index does not contain an integer.
+     */
     public int getIndex(String index) throws NumberFormatException {
         return Integer.parseInt(index) - 1;
     }
 
+    /**
+     * Returns a boolean based on whether the parsed message array contains both the command and description.
+     *
+     * @param parsedMsg String array of parsed message.
+     * @return Boolean of whether the parsed String array parsedMsg contains both the command and description.
+     */
     private boolean checkTaskEmpty(String[] parsedMsg) {
         return parsedMsg.length <= 1;
     }
@@ -19,6 +32,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the String command given and calls the corresponding methods from the Ui, TaskList and Storage objects.
+     *
+     * @param ui Ui object to print messages from.
+     * @param tasks TaskList object to call methods from.
+     * @param storage Storage object to call methods from.
+     * @param command String of command to be parsed.
+     */
     public void parseCommand(Ui ui, TaskList tasks, Storage storage, String command) {
         String[] parsed = command.split(" ");
 

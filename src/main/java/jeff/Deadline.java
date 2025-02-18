@@ -9,8 +9,12 @@ public class Deadline extends Task {
     private static final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
+    /**
+     * Constructs a Deadline object and assigns the description and time to complete by.
+     *
+     * @param desc String of task description.
+     */
     public Deadline(String desc) {
-        super(desc);
         String[] descSplit = desc.split(" /by ");
         this.desc = descSplit[0];
         try {
@@ -20,6 +24,12 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Returns a Deadline object based on the string representation of a task.
+     *
+     * @param task String representation of a task.
+     * @return Deadline object based on String task.
+     */
     public static Task parseTask(String task) {
         String trimmed = task.substring(4);
         int byPos = trimmed.lastIndexOf("(by: ");
