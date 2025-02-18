@@ -7,8 +7,8 @@ import java.time.format.DateTimeParseException;
 public class Event extends Task {
     private LocalDate fromTime = null;
     private LocalDate toTime = null;
-    private static final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private static final DateTimeFormatter DATE_FORMAT_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter DATE_FORMAT_OUTPUT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     public Event(String desc) {
         super(desc);
@@ -18,8 +18,8 @@ public class Event extends Task {
 
         String[] secondSplit = firstSplit[1].split(" /to ");
         try {
-            this.fromTime = LocalDate.parse(secondSplit[0], inputFormat);
-            this.toTime = LocalDate.parse(secondSplit[1], inputFormat);
+            this.fromTime = LocalDate.parse(secondSplit[0], DATE_FORMAT_INPUT);
+            this.toTime = LocalDate.parse(secondSplit[1], DATE_FORMAT_INPUT);
         } catch (DateTimeParseException e) {
             this.desc += " from: " + secondSplit[0] + " to: " + secondSplit[1];
         }
@@ -30,10 +30,12 @@ public class Event extends Task {
         int fromPos = trimmed.lastIndexOf("(from: ");
         int toPos = trimmed.lastIndexOf(" to: ");
         String desc = trimmed.substring(0, fromPos).trim();
-        LocalDate startTime = LocalDate.parse(trimmed.substring(fromPos + 7, toPos).trim(), outputFormat);
-        LocalDate endTime = LocalDate.parse(trimmed.substring(toPos + 4, trimmed.length() -1).trim(), outputFormat);
+        LocalDate startTime = LocalDate.parse(trimmed.substring(fromPos + 7, toPos).trim(), DATE_FORMAT_OUTPUT);
+        LocalDate endTime = LocalDate.parse(trimmed.substring(toPos + 4, trimmed.length() -1).trim(),
+                DATE_FORMAT_OUTPUT);
 
-        Task newTask = new Event(desc + " /from " + startTime.format(inputFormat) + " /to " + endTime.format(inputFormat));
+        Task newTask = new Event(desc + " /from " + startTime.format(DATE_FORMAT_INPUT)
+                + " /to " + endTime.format(DATE_FORMAT_INPUT));
         if (task.contains("[X]")) {
             newTask.setDone();
         }
@@ -44,7 +46,7 @@ public class Event extends Task {
     public String toString() {
         return ((this.done) ? "[E][X] " : "[E][ ] ")
                 + this.desc
-                + ((this.fromTime != null) ? " (from: " + this.fromTime.format(outputFormat) : "")
-                + ((this.toTime != null) ? " to: " + this.toTime.format(outputFormat) + ")" : "");
+                + ((this.fromTime != null) ? " (from: " + this.fromTime.format(DATE_FORMAT_OUTPUT) : "")
+                + ((this.toTime != null) ? " to: " + this.toTime.format(DATE_FORMAT_OUTPUT) + ")" : "");
     }
 }
