@@ -15,6 +15,11 @@ public class Jeff {
     private TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Constructs a Jeff object and assigns the filepath, as well as constructing the Ui, Storage and TaskList objects.
+     *
+     * @param filepath String of filepath to be assigned.
+     */
     public Jeff(String filepath) {
         ui = new Ui();
         storage = new Storage(filepath);
@@ -26,6 +31,9 @@ public class Jeff {
         }
     }
 
+    /**
+     * Runs the UI object.
+     */
     public void run() {
         ui.run(tasks, storage);
     }

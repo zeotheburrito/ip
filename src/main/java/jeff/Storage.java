@@ -10,14 +10,31 @@ import java.nio.file.Paths;
 public class Storage {
     private final String filepath;
 
+    /**
+     * Constructs a Storage object and assigns the value of filepath.
+     *
+     * @param filepath String of filepath to read and write to.
+     */
     public Storage(String filepath) {
         this.filepath = filepath;
     }
 
+    /**
+     * Returns string of entire file read from filepath.
+     *
+     * @return File from filepath as string.
+     * @throws IOException If unable to read from filepath.
+     */
     public String load() throws IOException {
         return new String(Files.readAllBytes(Paths.get(filepath)));
     }
 
+    /**
+     * Saves the tasks in TaskLists object by writing to filepath.
+     *
+     * @param tasks TaskLists with tasks to be saved.
+     * @throws IOException If unable to write to filepath.
+     */
     public void save(TaskList tasks) throws IOException {
         File f = new File(filepath);
 

@@ -10,9 +10,12 @@ public class Event extends Task {
     private static final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
+    /**
+     * Constructs a Event object and assigns the description, the start time and the end time.
+     *
+     * @param desc String of task description.
+     */
     public Event(String desc) {
-        super(desc);
-
         String[] firstSplit = desc.split(" /from ");
         this.desc = firstSplit[0];
 
@@ -25,6 +28,12 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Returns a Event object based on the string representation of a task.
+     *
+     * @param task String representation of a task.
+     * @return EVent object based on String task.
+     */
     public static Task parseTask(String task) {
         String trimmed = task.substring(4);
         int fromPos = trimmed.lastIndexOf("(from: ");
