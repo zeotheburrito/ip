@@ -104,11 +104,24 @@ public class Ui {
     }
 
     public void printDeletedTask(Task task, TaskList tasks) {
-        System.out.print(
+        System.out.print(formatMessage(
                 " Noted. I've removed this task:\n" +
                 "  " + task + "\n" +
                 getTasksLengthMsg(tasks)
-        );
+        ));
+    }
+
+    public void printFoundTasks(TaskList tasks) {
+        if (tasks.checkIsEmpty()) {
+            System.out.print(formatMessage(
+                    " There are no matching tasks in your list."
+            ));
+        } else {
+            System.out.print(formatMessage(
+                    " Here are the matching tasks in your list:\n" +
+                            tasks
+            ));
+        }
     }
 
     public void printInvalidCommandError() {

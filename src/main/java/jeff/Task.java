@@ -25,6 +25,10 @@ abstract public class Task {
         this.done = false;
     }
 
+    public boolean descContains(String keyword) {
+        return this.desc.contains(keyword);
+    }
+
     @Override
     public String toString() {
         if (this.done) {

@@ -1,6 +1,7 @@
 package jeff;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Parser {
     /**
@@ -91,6 +92,14 @@ public class Parser {
             Task deletedTask = tasks.delete(id);
             ui.printDeletedTask(deletedTask, tasks);
             saveList(ui, tasks, storage);
+            break;
+        case "find":
+            if (checkTaskEmpty(parsed)) {
+                ui.printEmptyTaskError();
+            } else {
+                TaskList subtasks = tasks.findTasks(command.split("find ")[1]);
+                ui.printFoundTasks(subtasks);
+            }
             break;
         default:
             ui.printInvalidCommandError();

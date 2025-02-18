@@ -1,6 +1,8 @@
 package jeff;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskList {
     private final ArrayList<Task> tasks;
@@ -18,7 +20,7 @@ public class TaskList {
         for (String line : lines) {
             Task task = sortTask(line);
             if (task != null) {
-                tasks.add(task);
+                this.tasks.add(task);
             }
         }
     }
@@ -138,6 +140,21 @@ public class TaskList {
         return tasks.size();
     }
 
+    public TaskList findTasks(String keyword) {
+        StringBuilder subtasks = new StringBuilder();
+
+        for (Task task : tasks) {
+            if (task.descContains(keyword)) {
+                subtasks.append(task).append("\n");
+            }
+        }
+
+        return new TaskList(subtasks.toString());
+    }
+
+    public boolean checkIsEmpty() {
+        return getLength() == 0;
+    }
     @Override
     public String toString() {
         StringBuilder items = new StringBuilder();
