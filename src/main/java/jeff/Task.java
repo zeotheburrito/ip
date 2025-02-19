@@ -1,6 +1,6 @@
 package jeff;
 
-abstract public class Task {
+public abstract class Task {
     protected String desc;
     protected boolean done;
 

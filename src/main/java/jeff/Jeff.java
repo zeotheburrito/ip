@@ -1,15 +1,5 @@
 package jeff;
 
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.IOException;
-
 public class Jeff {
     private final Storage storage;
     private TaskList tasks;

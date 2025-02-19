@@ -1,15 +1,13 @@
 package jeff;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TaskList {
     private final ArrayList<Task> tasks;
 
     /**
      * Constructs a TaskList object and adds Tasks represented in String data
-     * to ArrayList<Task> tasks.
+     * to ArrayList tasks.
      *
      * @param data String representation of Tasks.
      */
@@ -26,7 +24,7 @@ public class TaskList {
     }
 
     /**
-     * Constructs a TaskList object with an empty ArrayList<Task> tasks.
+     * Constructs a TaskList object with an empty ArrayList tasks.
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -74,7 +72,7 @@ public class TaskList {
     }
 
     /**
-     * Returns Todo after adding it to ArrayList<Task> tasks.
+     * Returns Todo after adding it to ArrayList tasks.
      *
      * @param task String representation of Todo to be added.
      * @return Todo added.
@@ -86,7 +84,7 @@ public class TaskList {
     }
 
     /**
-     * Returns Deadline after adding it to ArrayList<Task> tasks.
+     * Returns Deadline after adding it to ArrayList tasks.
      *
      * @param task String representation of Deadline to be added.
      * @return Deadline added.
@@ -98,7 +96,7 @@ public class TaskList {
     }
 
     /**
-     * Returns Event after adding it to ArrayList<Task> tasks.
+     * Returns Event after adding it to ArrayList tasks.
      *
      * @param task String representation of Event to be added.
      * @return Event added.
@@ -110,31 +108,31 @@ public class TaskList {
     }
 
     /**
-     * Returns Task from ArrayList<Task> tasks at specified index.
+     * Returns Task from ArrayList tasks at specified index.
      *
-     * @param index Index of Task in ArrayList<Tasks> tasks.
+     * @param index Index of Task in ArrayList tasks.
      * @return Task at specified index.
-     * @throws IndexOutOfBoundsException If the index is not within the bounds of ArrayList<Task> tasks.
+     * @throws IndexOutOfBoundsException If the index is not within the bounds of ArrayList tasks.
      */
     public Task get(int index) throws IndexOutOfBoundsException {
         return tasks.get(index);
     }
 
     /**
-     * Returns Task deleted from ArrayList<Task> tasks at specified index.
+     * Returns Task deleted from ArrayList tasks at specified index.
      *
      * @param index Index of Task to be deleted.
-     * @return Task deleted from ArrayList<Task> tasks.
-     * @throws IndexOutOfBoundsException If the index is not within the bounds of ArrayList<Task> tasks.
+     * @return Task deleted from ArrayList tasks.
+     * @throws IndexOutOfBoundsException If the index is not within the bounds of ArrayList tasks.
      */
     public Task delete(int index) throws IndexOutOfBoundsException {
         return tasks.remove(index);
     }
 
     /**
-     * Returns the number of Tasks in ArrayList<Task> tasks.
+     * Returns the number of Tasks in ArrayList tasks.
      *
-     * @return Number of Tasks in ArrayList<Task> tasks
+     * @return Number of Tasks in ArrayList tasks.
      */
     public int getLength() {
         return tasks.size();
