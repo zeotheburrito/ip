@@ -10,9 +10,9 @@ public class Ui {
      * @return Formatted message.
      */
     public String formatMessage(String message) {
-        String messageFormat = "____________________________________________________________\n" +
-            " %s\n" +
-            "____________________________________________________________\n";
+        String messageFormat = "____________________________________________________________\n"
+            + " %s\n"
+            + "____________________________________________________________\n";
         return String.format(messageFormat, message);
     }
 
@@ -43,8 +43,8 @@ public class Ui {
      */
     public void printGreetings() {
         System.out.print(formatMessage(
-                " Hello! My name Jeff.\n" +
-                "  What can I do for you?"
+                " Hello! My name Jeff.\n"
+                + "  What can I do for you?"
         ));
     }
 
@@ -62,8 +62,8 @@ public class Ui {
      */
     public void printTaskList(TaskList tasks) {
         System.out.print(formatMessage(
-                " Here are the tasks in your list:\n" +
-                tasks
+                " Here are the tasks in your list:\n"
+                + tasks
         ));
     }
 
@@ -74,8 +74,8 @@ public class Ui {
      */
     public void printMarkedTask(Task task) {
         System.out.print(formatMessage(
-                " Nice! I've marked this task as done:\n" +
-                "  " + task
+                " Nice! I've marked this task as done:\n"
+                + "  " + task
         ));
     }
 
@@ -86,8 +86,8 @@ public class Ui {
      */
     public void printUnmarkedTask(Task task) {
         System.out.print(formatMessage(
-                " OK, I've marked this task as not done yet:\n" +
-                "  " + task
+                " OK, I've marked this task as not done yet:\n"
+                + "  " + task
         ));
     }
 
@@ -97,17 +97,17 @@ public class Ui {
 
     public void printAddedTask(Task task, TaskList tasks) {
         System.out.print(formatMessage(
-                " Got it. I've added this task:\n" +
-                "  " + task + "\n" +
-                getTasksLengthMsg(tasks)
+                " Got it. I've added this task:\n"
+                + "  " + task + "\n"
+                + getTasksLengthMsg(tasks)
         ));
     }
 
     public void printDeletedTask(Task task, TaskList tasks) {
         System.out.print(formatMessage(
-                " Noted. I've removed this task:\n" +
-                "  " + task + "\n" +
-                getTasksLengthMsg(tasks)
+                " Noted. I've removed this task:\n"
+                + "  " + task + "\n"
+                + getTasksLengthMsg(tasks)
         ));
     }
 
@@ -118,8 +118,8 @@ public class Ui {
             ));
         } else {
             System.out.print(formatMessage(
-                    " Here are the matching tasks in your list:\n" +
-                            tasks
+                    " Here are the matching tasks in your list:\n"
+                    + tasks
             ));
         }
     }

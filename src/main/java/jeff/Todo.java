@@ -2,7 +2,7 @@ package jeff;
 
 import java.util.Objects;
 
-public class Todo extends Task{
+public class Todo extends Task {
     /**
      * Constructs a Todo object and assigns the description.
      *
