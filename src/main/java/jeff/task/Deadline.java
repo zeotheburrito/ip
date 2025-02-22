@@ -1,13 +1,16 @@
-package jeff;
+package jeff.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Deadline
+ */
 public class Deadline extends Task {
-    private LocalDate byTime = null;
     private static final DateTimeFormatter DATE_FORMAT_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter DATE_FORMAT_OUTPUT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private LocalDate byTime = null;
 
     /**
      * Constructs a Deadline object and assigns the description and time to complete by.

@@ -1,0 +1,7 @@
+#error {
+    -fx-padding: 10px;
+}
+
+#box {
+    -fx-background-color: lightcoral;
+}

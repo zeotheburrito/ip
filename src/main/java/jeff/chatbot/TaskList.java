@@ -1,7 +1,15 @@
-package jeff;
+package jeff.chatbot;
 
 import java.util.ArrayList;
 
+import jeff.task.Deadline;
+import jeff.task.Event;
+import jeff.task.Task;
+import jeff.task.Todo;
+
+/**
+ * TaskList
+ */
 public class TaskList {
     private final ArrayList<Task> tasks;
 
@@ -138,6 +146,11 @@ public class TaskList {
         return tasks.size();
     }
 
+    /**
+     * Returns a TaskList of all Task objects containing the keyword in the description.
+     * @param keyword String of keyword to search Task descriptions.
+     * @return TaskList of Tasks containing the keyword in their description.
+     */
     public TaskList findTasks(String keyword) {
         StringBuilder subtasks = new StringBuilder();
 

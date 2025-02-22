@@ -1,17 +1,20 @@
-package jeff;
+package jeff.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Event
+ */
 public class Event extends Task {
-    private LocalDate fromTime = null;
-    private LocalDate toTime = null;
     private static final DateTimeFormatter DATE_FORMAT_INPUT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter DATE_FORMAT_OUTPUT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
+    private LocalDate fromTime = null;
+    private LocalDate toTime = null;
     /**
-     * Constructs a Event object and assigns the description, the start time and the end time.
+     * Constructs an Event object and assigns the description, the start time and the end time.
      *
      * @param desc String of task description.
      */
@@ -29,7 +32,7 @@ public class Event extends Task {
     }
 
     /**
-     * Returns a Event object based on the string representation of a task.
+     * Returns an Event object based on the string representation of a task.
      *
      * @param task String representation of a task.
      * @return EVent object based on String task.
@@ -40,7 +43,7 @@ public class Event extends Task {
         int toPos = trimmed.lastIndexOf(" to: ");
         String desc = trimmed.substring(0, fromPos).trim();
         LocalDate startTime = LocalDate.parse(trimmed.substring(fromPos + 7, toPos).trim(), DATE_FORMAT_OUTPUT);
-        LocalDate endTime = LocalDate.parse(trimmed.substring(toPos + 4, trimmed.length() -1).trim(),
+        LocalDate endTime = LocalDate.parse(trimmed.substring(toPos + 4, trimmed.length() - 1).trim(),
                 DATE_FORMAT_OUTPUT);
 
         Task newTask = new Event(desc + " /from " + startTime.format(DATE_FORMAT_INPUT)

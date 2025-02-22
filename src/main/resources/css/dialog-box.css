@@ -1,0 +1,5 @@
+#dialog {
+    -fx-padding: 10px;
+    -fx-background-color: linear-gradient(to bottom right, #00ffbf, #00ddff);
+    -fx-fill-height: true;
+}

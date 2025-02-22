@@ -1,7 +1,10 @@
-package jeff;
+package jeff.task;
 
 import java.util.Objects;
 
+/**
+ * Todo
+ */
 public class Todo extends Task {
     /**
      * Constructs a Todo object and assigns the description.

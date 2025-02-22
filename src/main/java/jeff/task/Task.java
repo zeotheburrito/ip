@@ -1,5 +1,8 @@
-package jeff;
+package jeff.task;
 
+/**
+ * Task
+ */
 public abstract class Task {
     protected String desc;
     protected boolean done;
