@@ -27,7 +27,7 @@ public class Jeff {
         try {
             tasks = new TaskList(storage.load());
         } catch (IOException e) {
-            //ui.printLoadingError(); // replace with way to get message and create new block
+            this.showError(ui.getLoadingError());
             tasks = new TaskList();
         }
     }
