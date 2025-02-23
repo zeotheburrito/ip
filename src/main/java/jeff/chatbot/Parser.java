@@ -9,6 +9,11 @@ import jeff.task.Task;
  * Parser
  */
 public class Parser {
+    private enum TaskType {
+        TODO,
+        DEADLINE,
+        EVENT
+    }
     /**
      * Returns the integer value of the String index.
      *
@@ -46,6 +51,38 @@ public class Parser {
     }
 
     /**
+     * Returns the empty string error after sending request to show the error in GUI.
+     * @param ui Ui object to get error message from.
+     * @param jeff Jeff object to send error request to.
+     * @return String of error message.
+     */
+    private String showTaskEmptyError(Ui ui, Jeff jeff) {
+        String error = ui.getEmptyTaskError();
+        jeff.showError(error);
+        return error;
+    }
+
+    /**
+     * Returns message after adding a new Task to the list based on its type.
+     * @param ui Ui object to get messages from.
+     * @param tasks TaskList object to add Task to.
+     * @param storage Storage object to save the tasks to.
+     * @param jeff Jeff object to send message to.
+     * @param command String containing task to be added.
+     * @param type Enum for type of Task to be added.
+     * @return String of message for adding task.
+     */
+    private String addTask(Ui ui, TaskList tasks, Storage storage, Jeff jeff, String command, TaskType type) {
+        Task newTask = switch (type) {
+        case TODO -> tasks.addTodo(command.split("todo ")[1]);
+        case DEADLINE -> tasks.addDeadline(command.split("deadline ")[1]);
+        case EVENT -> tasks.addEvent(command.split("event ")[1]);
+        };
+        saveList(ui, tasks, storage, jeff);
+        return ui.getAddedTask(newTask, tasks);
+    }
+
+    /**
      * Parses the String command given and calls the corresponding methods from the Ui, TaskList and Storage objects.
      *
      * @param ui Ui object to print messages from.
@@ -71,34 +108,19 @@ public class Parser {
             return ui.getUnmarkedTask(unmarkedTask);
         case "todo":
             if (checkTaskEmpty(parsed)) {
-                String error = ui.getEmptyTaskError();
-                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
-                jeff.showError(error);
-                return error;
+                return showTaskEmptyError(ui, jeff);
             }
-            Task newTask = tasks.addTodo(command.split("todo ")[1]);
-            saveList(ui, tasks, storage, jeff);
-            return ui.getAddedTask(newTask, tasks);
+            return addTask(ui, tasks, storage, jeff, command, TaskType.TODO);
         case "deadline":
             if (checkTaskEmpty(parsed)) {
-                String error = ui.getEmptyTaskError();
-                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
-                jeff.showError(error);
-                return error;
+                return showTaskEmptyError(ui, jeff);
             }
-            Task newT = tasks.addDeadline(command.split("deadline ")[1]);
-            saveList(ui, tasks, storage, jeff);
-            return ui.getAddedTask(newT, tasks);
+            return addTask(ui, tasks, storage, jeff, command, TaskType.DEADLINE);
         case "event":
             if (checkTaskEmpty(parsed)) {
-                String error = ui.getEmptyTaskError();
-                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
-                jeff.showError(error);
-                return error;
+                return showTaskEmptyError(ui, jeff);
             }
-            Task temp = tasks.addEvent(command.split("event ")[1]);
-            saveList(ui, tasks, storage, jeff);
-            return ui.getAddedTask(temp, tasks);
+            return addTask(ui, tasks, storage, jeff, command, TaskType.EVENT);
         case "delete":
             int id = getIndex(parsed[1]);
             Task deletedTask = tasks.delete(id);
@@ -106,10 +128,7 @@ public class Parser {
             return ui.getDeletedTask(deletedTask, tasks);
         case "find":
             if (checkTaskEmpty(parsed)) {
-                String error = ui.getEmptyTaskError();
-                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
-                jeff.showError(error);
-                return error;
+                return showTaskEmptyError(ui, jeff);
             }
             TaskList subtasks = tasks.findTasks(command.split("find ")[1]);
             return ui.getFoundTasks(subtasks);
