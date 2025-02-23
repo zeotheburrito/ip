@@ -1,6 +1,7 @@
 package jeff.chatbot;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import jeff.task.Task;
 
@@ -71,6 +72,7 @@ public class Parser {
         case "todo":
             if (checkTaskEmpty(parsed)) {
                 String error = ui.getEmptyTaskError();
+                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
                 jeff.showError(error);
                 return error;
             }
@@ -80,6 +82,7 @@ public class Parser {
         case "deadline":
             if (checkTaskEmpty(parsed)) {
                 String error = ui.getEmptyTaskError();
+                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
                 jeff.showError(error);
                 return error;
             }
@@ -89,6 +92,7 @@ public class Parser {
         case "event":
             if (checkTaskEmpty(parsed)) {
                 String error = ui.getEmptyTaskError();
+                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
                 jeff.showError(error);
                 return error;
             }
@@ -103,6 +107,7 @@ public class Parser {
         case "find":
             if (checkTaskEmpty(parsed)) {
                 String error = ui.getEmptyTaskError();
+                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
                 jeff.showError(error);
                 return error;
             }
@@ -113,6 +118,7 @@ public class Parser {
             return ui.getExitMsg();
         default:
             String error = ui.getInvalidCommandError();
+            assert Objects.equals(error, "Error: Invalid command.") : "Invalid error message";
             jeff.showError(error);
             return error;
         }
