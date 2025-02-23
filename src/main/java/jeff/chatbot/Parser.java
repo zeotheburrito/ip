@@ -1,6 +1,7 @@
 package jeff.chatbot;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import jeff.task.Task;
 
@@ -44,6 +45,13 @@ public class Parser {
         }
     }
 
+    private String getTaskEmptyError(Ui ui, Jeff jeff) {
+        String error = ui.getEmptyTaskError();
+        assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
+        jeff.showError(error);
+        return error;
+    }
+
     /**
      * Parses the String command given and calls the corresponding methods from the Ui, TaskList and Storage objects.
      *
@@ -71,6 +79,7 @@ public class Parser {
         case "todo":
             if (checkTaskEmpty(parsed)) {
                 String error = ui.getEmptyTaskError();
+                assert Objects.equals(error, "Error: Task is empty.") : "Invalid error message";
                 jeff.showError(error);
                 return error;
             }
@@ -79,18 +88,14 @@ public class Parser {
             return ui.getAddedTask(newTask, tasks);
         case "deadline":
             if (checkTaskEmpty(parsed)) {
-                String error = ui.getEmptyTaskError();
-                jeff.showError(error);
-                return error;
+                return getTaskEmptyError(ui, jeff);
             }
             Task newT = tasks.addDeadline(command.split("deadline ")[1]);
             saveList(ui, tasks, storage, jeff);
             return ui.getAddedTask(newT, tasks);
         case "event":
             if (checkTaskEmpty(parsed)) {
-                String error = ui.getEmptyTaskError();
-                jeff.showError(error);
-                return error;
+                return getTaskEmptyError(ui, jeff);
             }
             Task temp = tasks.addEvent(command.split("event ")[1]);
             saveList(ui, tasks, storage, jeff);
@@ -102,9 +107,7 @@ public class Parser {
             return ui.getDeletedTask(deletedTask, tasks);
         case "find":
             if (checkTaskEmpty(parsed)) {
-                String error = ui.getEmptyTaskError();
-                jeff.showError(error);
-                return error;
+                return getTaskEmptyError(ui, jeff);
             }
             TaskList subtasks = tasks.findTasks(command.split("find ")[1]);
             return ui.getFoundTasks(subtasks);
@@ -113,6 +116,7 @@ public class Parser {
             return ui.getExitMsg();
         default:
             String error = ui.getInvalidCommandError();
+            assert Objects.equals(error, "Error: Invalid command.") : "Invalid error message";
             jeff.showError(error);
             return error;
         }
