@@ -1,6 +1,7 @@
 package jeff.chatbot;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import jeff.task.Task;
 
@@ -136,6 +137,7 @@ public class Parser {
             return ui.getExitMsg();
         default:
             String error = ui.getInvalidCommandError();
+            assert Objects.equals(error, "Error: Invalid command.") : "Invalid error message";
             jeff.showError(error);
             return error;
         }
