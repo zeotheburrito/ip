@@ -23,7 +23,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            this.jeff = new Jeff("data/jeff.txt", fxmlLoader.getController());
+            this.jeff = new Jeff("data/jeff.txt", "data/notes.txt", fxmlLoader.getController());
             fxmlLoader.<MainWindow>getController().setJeff(jeff);
             fxmlLoader.<MainWindow>getController().showStartUpMessage();
             stage.show();

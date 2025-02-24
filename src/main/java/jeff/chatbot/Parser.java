@@ -3,6 +3,7 @@ package jeff.chatbot;
 import java.io.IOException;
 import java.util.Objects;
 
+import jeff.notes.Note;
 import jeff.task.Task;
 
 /**
@@ -41,9 +42,18 @@ public class Parser {
      * @param tasks TaskList to get Tasks from.
      * @param storage Storage to save Tasks to file with.
      */
-    private void saveList(Ui ui, TaskList tasks, Storage storage, Jeff jeff) {
+    private void saveTasks(Ui ui, TaskList tasks, Storage storage, Jeff jeff) {
         try {
-            storage.save(tasks);
+            storage.saveTasks(tasks);
+        } catch (IOException e) {
+            jeff.showError(ui.getSavingError());
+            e.printStackTrace();
+        }
+    }
+
+    private void saveNotes(Ui ui, NoteList notes, Storage storage, Jeff jeff) {
+        try {
+            storage.saveNotes(notes);
         } catch (IOException e) {
             jeff.showError(ui.getSavingError());
             e.printStackTrace();
@@ -78,7 +88,7 @@ public class Parser {
         case DEADLINE -> tasks.addDeadline(command.split("deadline ")[1]);
         case EVENT -> tasks.addEvent(command.split("event ")[1]);
         };
-        saveList(ui, tasks, storage, jeff);
+        saveTasks(ui, tasks, storage, jeff);
         return ui.getAddedTask(newTask, tasks);
     }
 
@@ -90,7 +100,7 @@ public class Parser {
      * @param storage Storage object to call methods from.
      * @param command String of command to be parsed.
      */
-    public String parseCommand(Ui ui, TaskList tasks, Storage storage, Jeff jeff, String command) {
+    public String parseCommand(Ui ui, TaskList tasks, NoteList notes, Storage storage, Jeff jeff, String command) {
         String[] parsed = command.split(" ");
 
         switch (parsed[0]) {
@@ -99,12 +109,12 @@ public class Parser {
         case "mark":
             int index = getIndex(parsed[1]);
             Task markedTask = tasks.mark(index);
-            saveList(ui, tasks, storage, jeff);
+            saveTasks(ui, tasks, storage, jeff);
             return ui.getMarkedTask(markedTask);
         case "unmark":
             int ind = getIndex(parsed[1]);
             Task unmarkedTask = tasks.unmark(ind);
-            saveList(ui, tasks, storage, jeff);
+            saveTasks(ui, tasks, storage, jeff);
             return ui.getUnmarkedTask(unmarkedTask);
         case "todo":
             if (checkTaskEmpty(parsed)) {
@@ -124,7 +134,7 @@ public class Parser {
         case "delete":
             int id = getIndex(parsed[1]);
             Task deletedTask = tasks.delete(id);
-            saveList(ui, tasks, storage, jeff);
+            saveTasks(ui, tasks, storage, jeff);
             return ui.getDeletedTask(deletedTask, tasks);
         case "find":
             if (checkTaskEmpty(parsed)) {
@@ -132,6 +142,15 @@ public class Parser {
             }
             TaskList subtasks = tasks.findTasks(command.split("find ")[1]);
             return ui.getFoundTasks(subtasks);
+        case "note":
+            if (checkTaskEmpty(parsed)) {
+                return showTaskEmptyError(ui, jeff);
+            }
+            Note newNote = notes.addNote(command.split("note ")[1]);
+            saveNotes(ui, notes, storage, jeff);
+            return ui.getAddedNote(newNote);
+        case "notes":
+            return ui.getNoteList(notes);
         case "bye":
             jeff.requestShutdown();
             return ui.getExitMsg();

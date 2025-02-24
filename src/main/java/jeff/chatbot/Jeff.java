@@ -10,6 +10,7 @@ import jeff.gui.MainWindow;
 public class Jeff {
     private final Storage storage;
     private TaskList tasks;
+    private NoteList notes;
     private final Ui ui;
     private final Parser parser;
     private final MainWindow controller;
@@ -17,18 +18,24 @@ public class Jeff {
     /**
      * Constructs a Jeff object and assigns the filepath, as well as constructing the Ui, Storage and TaskList objects.
      *
-     * @param filepath String of filepath to be assigned.
+     * @param taskFilepath String of filepath to be assigned.
      */
-    public Jeff(String filepath, MainWindow controller) {
+    public Jeff(String taskFilepath, String noteFilepath, MainWindow controller) {
         ui = new Ui();
-        storage = new Storage(filepath);
+        storage = new Storage(taskFilepath, noteFilepath);
         parser = new Parser();
         this.controller = controller;
         try {
-            tasks = new TaskList(storage.load());
+            tasks = new TaskList(storage.loadTasks());
         } catch (IOException e) {
             this.showError(ui.getLoadingError());
             tasks = new TaskList();
+        }
+        try {
+            notes = new NoteList(storage.loadNotes());
+        } catch (IOException e) {
+            this.showError(ui.getLoadingError());
+            notes = new NoteList();
         }
     }
 
@@ -38,7 +45,7 @@ public class Jeff {
      * @return String output based on command in input.
      */
     public String getResponse(String input) {
-        return parser.parseCommand(this.ui, this.tasks, this.storage, this, input);
+        return parser.parseCommand(this.ui, this.tasks, this.notes, this.storage, this, input);
     }
 
     /**

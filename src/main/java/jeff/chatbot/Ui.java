@@ -1,5 +1,6 @@
 package jeff.chatbot;
 
+import jeff.notes.Note;
 import jeff.task.Task;
 
 /**
@@ -75,6 +76,25 @@ public class Ui {
             return "Here are the matching tasks in your list:\n"
                     + tasks;
         }
+    }
+
+    /**
+     * Returns message for added note.
+     * @param note Note just added.
+     * @return Message for added note.
+     */
+    public String getAddedNote(Note note) {
+        return "Alright. I've added this note:\n"
+                + " " + note + "\n";
+    }
+
+    /**
+     * Returns all the Notes in NoteList.
+     * @param notes NoteList to get Notes from.
+     * @return String message with all Notes in NoteList.
+     */
+    public String getNoteList(NoteList notes) {
+        return "Here are your notes:\n" + notes;
     }
 
     public String getInvalidCommandError() {

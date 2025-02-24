@@ -11,15 +11,17 @@ import java.nio.file.Paths;
  * Storage
  */
 public class Storage {
-    private final String filepath;
+    private final String taskFilepath;
+    private final String noteFilepath;
 
     /**
      * Constructs a Storage object and assigns the value of filepath.
      *
-     * @param filepath String of filepath to read and write to.
+     * @param taskFilepath String of filepath to read and write to.
      */
-    public Storage(String filepath) {
-        this.filepath = filepath;
+    public Storage(String taskFilepath, String noteFilepath) {
+        this.taskFilepath = taskFilepath;
+        this.noteFilepath = noteFilepath;
     }
 
     /**
@@ -28,8 +30,12 @@ public class Storage {
      * @return File from filepath as string.
      * @throws IOException If unable to read from filepath.
      */
-    public String load() throws IOException {
-        return new String(Files.readAllBytes(Paths.get(filepath)));
+    public String loadTasks() throws IOException {
+        return new String(Files.readAllBytes(Paths.get(taskFilepath)));
+    }
+
+    public String loadNotes() throws IOException {
+        return new String(Files.readAllBytes(Paths.get(noteFilepath)));
     }
 
     /**
@@ -38,8 +44,8 @@ public class Storage {
      * @param tasks TaskLists with tasks to be saved.
      * @throws IOException If unable to write to filepath.
      */
-    public void save(TaskList tasks) throws IOException {
-        File f = new File(filepath);
+    public void saveTasks(TaskList tasks) throws IOException {
+        File f = new File(taskFilepath);
 
         File parentDir = f.getParentFile();
         if (parentDir != null && !parentDir.exists()) {
@@ -52,6 +58,29 @@ public class Storage {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
             for (int i = 0; i < tasks.getLength(); i++) {
                 writer.write(tasks.get(i).toString() + "\n");
+            }
+        }
+    }
+
+    /**
+     * Saves the Notes in NoteList object by writing to filepath.
+     * @param notes NoteList with Notes to be saved.
+     * @throws IOException If unable to write filepath.
+     */
+    public void saveNotes(NoteList notes) throws IOException {
+        File f = new File(noteFilepath);
+
+        File parentDir = f.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            boolean dirCreated = parentDir.mkdirs();
+            if (!dirCreated) {
+                throw new IOException("Failed to create directories");
+            }
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
+            for (int i = 0; i < notes.getLength(); i++) {
+                writer.write(notes.get(i).toString() + "\n");
             }
         }
     }
