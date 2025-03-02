@@ -1,5 +1,3 @@
-# Jeff User Guide
-
 ![Screenshot of Jeff](Ui.png)
 
 Jeff is your friendly land shark that can help keep track of your tasks!
