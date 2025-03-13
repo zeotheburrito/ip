@@ -25,7 +25,7 @@ Adds deadline with the given description and due time
 
 `description - description of the deadline task`
 
-`due time - time the deadline task is due by`
+`due time - time the deadline task is due by, in the format YYYY-MM-DD`
 
 ### `event [description] /from [start time] /to [end time]`
 
@@ -33,9 +33,9 @@ Adds event with the given description, start time and end time
 
 `description - description of the deadline task`
 
-`start time - time the event task starts`
+`start time - time the event task starts, in the format YYYY-MM-DD`
 
-`end time - time the event task ends`
+`end time - time the event task ends, in the format YYYY-MM-DD`
 
 ### `list`
 
